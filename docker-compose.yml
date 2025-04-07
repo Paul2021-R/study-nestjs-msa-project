@@ -1,0 +1,23 @@
+services:
+  reservations:
+    build: 
+      context: .
+      dockerfile: ./apps/reservations/Dockerfile
+      target: development
+    container_name: sleepr-reservations
+    restart: always
+    command: pnpm run start:dev reservations
+    ports:
+      - 3000:3000
+    volumes:
+      - .:/usr/src/app
+
+  mongo:
+    image: mongo:latest
+    container_name: sleepr-mongodb
+    restart: always
+    ports:
+      - 27017:27017
+    # environment:
+    #   MONGO_INITDB_ROOT_USERNAME: hansol
+    #   MONGO_INITDB_ROOT_PASSWORD: ryuryu0314

@@ -13,6 +13,6 @@ import { LoggerModule as PinoLoggerModule } from 'nestjs-pino';
               }
             }
           }),
-    ]
+    ],
 })
 export class LoggerModule {}

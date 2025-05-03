@@ -6,11 +6,12 @@ import { LoggerModule } from '@app/common';
 import { JwtModule } from '@nestjs/jwt';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import * as Joi from 'joi';
+import { LocalStrategy } from './strategies/local.strategy';
 
 @Module({
   imports: [
-    UsersModule, 
     LoggerModule, 
+    UsersModule, 
     ConfigModule.forRoot({// config 자체 모듈이 아니라 NestJS 에서 직접 제공하는걸 사용함 
       isGlobal: true, 
       validationSchema: Joi.object({ // env 파일을 위한 validation schema
@@ -30,6 +31,6 @@ import * as Joi from 'joi';
     }),
 ],
   controllers: [AuthController],
-  providers: [AuthService],
+  providers: [AuthService, LocalStrategy],
 })
 export class AuthModule {}

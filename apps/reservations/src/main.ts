@@ -12,7 +12,7 @@ async function bootstrap() {
   app.useLogger(app.get(Logger))
 
   const configService = app.get(ConfigService);
-  
+
   await app.listen(Number(configService.get('PORT')));
 
 }

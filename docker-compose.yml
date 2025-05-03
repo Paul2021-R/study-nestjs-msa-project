@@ -12,6 +12,19 @@ services:
     volumes:
       - .:/usr/src/app
 
+  auth:
+    build: 
+      context: .
+      dockerfile: ./apps/auth/Dockerfile
+      target: development
+    container_name: sleepr-auth
+    restart: always
+    command: pnpm run start:dev auth
+    ports:
+      - 3001:3001
+    volumes:
+      - .:/usr/src/app
+
   mongo:
     image: mongo:latest
     container_name: sleepr-mongodb

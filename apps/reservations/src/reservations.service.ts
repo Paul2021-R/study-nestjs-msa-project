@@ -5,17 +5,14 @@ import { ReservationRepository } from './reservations.repository';
 
 @Injectable()
 export class ReservationsService {
+  constructor(private readonly reservationRepository: ReservationRepository) {}
 
-  constructor(
-    private readonly reservationRepository: ReservationRepository
-  ){}
-  
-  async create(createReservationDto: CreateReservationDto) {
+  async create(createReservationDto: CreateReservationDto, userId: string) {
     return await this.reservationRepository.create({
       ...createReservationDto,
       timestamp: new Date(),
-      userId: `124`
-    })
+      userId,
+    });
   }
 
   async findAll() {
@@ -23,19 +20,17 @@ export class ReservationsService {
   }
 
   async findOne(_id: string) {
-    return await this.reservationRepository.findOne( { _id });
+    return await this.reservationRepository.findOne({ _id });
   }
 
   async update(_id: string, updateReservationDto: UpdateReservationDto) {
     return await this.reservationRepository.findOneAndUpdate(
       { _id },
-      { $set: updateReservationDto }
+      { $set: updateReservationDto },
     );
   }
 
   async remove(_id: string) {
-    return await this.reservationRepository.findOneAndDelete(
-      { _id }
-    );
+    return await this.reservationRepository.findOneAndDelete({ _id });
   }
 }

@@ -13,13 +13,11 @@ export class AuthController {
   @Post('login')
   public async login(
     @CurrentUser() user: UserDocument,
-    @Res({passthrough: true}) response: Response,
+    @Res({ passthrough: true }) response: Response,
   ) {
-
     await this.authService.login(user, response);
     response.send(user);
   }
-  
 
   @Get()
   getHello(): string {

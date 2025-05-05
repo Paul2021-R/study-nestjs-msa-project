@@ -18,8 +18,8 @@ import { CurrentUser } from '@app/common/decorator';
 export class ReservationsController {
   constructor(private readonly reservationsService: ReservationsService) {}
 
-  @UseGuards(JwtAuthGuard)
   @Post()
+  @UseGuards(JwtAuthGuard)
   async create(
     @Body() createReservationDto: CreateReservationDto,
     @CurrentUser() user: UserDto,

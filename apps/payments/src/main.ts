@@ -1,8 +1,6 @@
 import { NestFactory } from '@nestjs/core';
 import { PaymentsModule } from './payments.module';
 import { ConfigService } from '@nestjs/config';
-import cookieParser from 'cookie-parser';
-import { ValidationPipe } from '@nestjs/common';
 import { Logger } from 'nestjs-pino';
 import { Transport } from '@nestjs/microservices';
 
@@ -16,8 +14,6 @@ async function bootstrap() {
       port: configService.get('HTTP_PORT'),
     },
   });
-  app.use(cookieParser());
-  app.useGlobalPipes(new ValidationPipe({ whitelist: true }));
   app.useLogger(app.get(Logger));
   await app.startAllMicroservices();
 }

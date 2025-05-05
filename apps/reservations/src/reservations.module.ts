@@ -55,7 +55,7 @@ import { ClientsModule, Transport } from '@nestjs/microservices';
           transport: Transport.TCP,
           options: {
             host: configService.get('PAYMENTS_HOST'),
-            port: configService.get('PAUYMENTS_PORT'),
+            port: configService.get('PAYMENTS_PORT'),
           },
         }),
         inject: [ConfigService],

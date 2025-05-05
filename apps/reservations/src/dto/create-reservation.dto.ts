@@ -17,13 +17,13 @@ export class CreateReservationDto {
   @Type(() => Date)
   endDate: Date;
 
-  @IsString()
-  @IsNotEmpty()
-  placeId: string;
+  // @IsString()
+  // @IsNotEmpty()
+  // placeId: string;
 
-  @IsString()
-  @IsNotEmpty()
-  invoiceId: string;
+  // @IsString()
+  // @IsNotEmpty()
+  // invoiceId: string;
 
   @IsDefined()
   @IsNotEmpty()

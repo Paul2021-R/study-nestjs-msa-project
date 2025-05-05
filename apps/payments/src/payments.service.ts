@@ -1,7 +1,8 @@
+import { CreateChargeDto } from '@app/common';
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import Stripe from 'stripe';
-import { CreateChargeDto } from '../../../libs/common/src/dto/create-charge.dto';
+import { v4 as uuid } from 'uuid';
 
 @Injectable()
 export class PaymentsService {
@@ -19,20 +20,31 @@ export class PaymentsService {
     });
   }
 
-  async createCharge({ card, amount }: CreateChargeDto) {
-    const paymentMethod = await this.stripe.paymentMethods.create({
-      type: 'card',
-      card: card,
-    });
+  async createCharge({ amount }: CreateChargeDto) {
+    try {
+      // const paymentMethod = await this.stripe.paymentMethods.create({
+      //   type: 'card',
+      //   card: card,
+      // });
 
-    const paymentIntent = await this.stripe.paymentIntents.create({
-      payment_method: paymentMethod.id,
-      amount: amount * 100,
-      confirm: true,
-      payment_method_types: ['card'],
-      currency: 'usd',
-    });
+      // const paymentIntent = await this.stripe.paymentIntents.create({
+      //   amount: amount * 100,
+      //   confirm: true,
+      //   // payment_method_types: ['card'],
+      //   currency: 'usd',
+      //   payment_method: 'pm_card_visa',
+      // });
 
-    return paymentIntent;
+      // return paymentIntent;
+      const id = uuid();
+      return {
+        id
+      }; // TODO: 내부 sandbox 결제 실패로 이렇게 대응
+    } catch (error) {
+      console.error('Error creating charge:', error.status);
+      console.error('Error creating charge:', error.stack);
+      console.error('Error creating charge:', error);
+      throw new Error('Failed to create charge');
+    }
   }
 }

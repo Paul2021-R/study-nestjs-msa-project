@@ -14,6 +14,10 @@ import * as Joi from 'joi';
       validationSchema: Joi.object({
         // env 파일을 위한 validation schema
         HTTP_PORT: Joi.number().required(),
+        SMTP_USER: Joi.string().required(),
+        GOOGLE_OAUTH_CLIENT_ID: Joi.string().required(),
+        GOOGLE_OAUTH_CLIENT_SECRET: Joi.string().required(),
+        GOOGLE_OAUTH_REFRESH_TOKEN: Joi.string().required()
       }),
     }),
   ],

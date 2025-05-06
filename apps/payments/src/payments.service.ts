@@ -42,7 +42,10 @@ export class PaymentsService {
 
       // return paymentIntent;
       const id = uuid();
-      this.notificationsService.emit('notify_email', { email });
+      await this.notificationsService.emit('notify_email', {
+        email,
+        text: `Heyyyy you've got something`,
+      });
       return {
         id
       }; // TODO: 내부 sandbox 결제 실패로 이렇게 대응

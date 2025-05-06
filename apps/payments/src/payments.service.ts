@@ -1,14 +1,19 @@
-import { CreateChargeDto } from '@app/common';
-import { Injectable } from '@nestjs/common';
+import { CreateChargeDto, NOTIFICATIONS_SERVICE } from '@app/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
+import { ClientProxy } from '@nestjs/microservices';
 import Stripe from 'stripe';
 import { v4 as uuid } from 'uuid';
+import { PaymentsCreateChargeDto } from './dto/payments-create-charge.dto';
 
 @Injectable()
 export class PaymentsService {
   private readonly stripe: Stripe;
 
-  constructor(private readonly configService: ConfigService) {
+  constructor(
+    private readonly configService: ConfigService,
+    @Inject(NOTIFICATIONS_SERVICE) private readonly notificationsService: ClientProxy,
+  ) {
     const stripeSecretKey = this.configService.get('STRIPE_SECRET_KEY');
     if (!stripeSecretKey) {
       throw new Error(
@@ -20,7 +25,7 @@ export class PaymentsService {
     });
   }
 
-  async createCharge({ amount }: CreateChargeDto) {
+  async createCharge({ card, amount, email }: PaymentsCreateChargeDto) {
     try {
       // const paymentMethod = await this.stripe.paymentMethods.create({
       //   type: 'card',
@@ -37,6 +42,7 @@ export class PaymentsService {
 
       // return paymentIntent;
       const id = uuid();
+      this.notificationsService.emit('notify_email', { email });
       return {
         id
       }; // TODO: 내부 sandbox 결제 실패로 이렇게 대응

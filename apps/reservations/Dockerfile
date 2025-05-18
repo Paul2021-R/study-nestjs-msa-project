@@ -7,9 +7,10 @@ COPY pnpm-lock.yaml ./
 
 RUN npm install -g pnpm
 
-RUN pnpm install
+COPY apps/reservations apps/reservations
+COPY libs libs 
 
-COPY . .
+RUN pnpm install -r
 
 RUN pnpm run build
 

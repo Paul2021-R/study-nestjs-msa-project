@@ -7,10 +7,10 @@ COPY pnpm-lock.yaml ./
 
 RUN npm install -g pnpm
 
-RUN pnpm install
+COPY apps/payments apps/payments
+COPY libs libs 
 
-COPY . .
-
+RUN pnpm install -r
 RUN pnpm run build
 
 FROM node:22-alpine AS production
